@@ -1,0 +1,52 @@
+---
+title: "Како се звала Бачка Паланка некада?"
+date: 2025-06-30
+category: Бачка Паланка
+---
+
+БАЧКА ПАЛАНКА ВЕСТИ - БАПдешавања Информативни портал - општине Бачка Паланка, Бач, Бачки Петровац
+
+Ulogujte se / Pridružite se
+
+romanianews
+
+Ulogujte se / Pridružite se
+
+понедељак, јун 30, 2025
+
+Ulogujte se / Pridružite se
+
+БАП ВЕСТИИнформативни портал
+
+Куцајте овдеПретражи
+
+БАЧКА ПАЛАНКА ВЕСТИ - БАПдешавања news
+
+type here...Претрага
+
+Историчари кажу да се Бачка Паланка на садашњем географском локалитету спомиње касно, у 17. веку, те по томе спада у историјски релативно младе градове у Војводини.
+
+Али, у далекој прошлости, на овом локалитету у Бачкој, уз леву обалу Дунава, на локацији данашње Бачке Паланке спомиње се насеље под другим именом. Средњовековно насеље, на геограској карти из 1570. године коју је израдио Волфганг Лазиус уписано је као Пешт. То насеље није бројало више од пет до десет кућа. На истој карти убележено је и насеље Керестур. Од 1526-1687. године овде се спомиње више заселака као: Висинда, Илова, Керекић, Павловац, Пркосово, Рајково, Слатине, Стублина, Тамана…
+Мапа из 1570. године (Волфганг Лазиус)
+Део мапе из 1570. године (Wолфганг Лазиус)
+Мапа Баната и Бачке из 1567. године
+Из овог времена постоји податак да је на територији Паланке постојало једно пољско утврђење, опкоп који је опасивао место насељено турским живљем, са турском војном посадом. По једном извору постојало је 1565. године док се у другом запису наводи да је подигнуто 1593. године и то, кажу историчари, званично казује о настанку места. Од овог утврђења вуче се име Паланка, као и код низа других места у Србији. Реч Паланка је турски романизам и долази од латинске речи Планка која изначава ограду од стубова, коља, ткз. палисад. Крајем 17. века на географској карти убележено је село Паланка (вицус Паланка) које се од тог времена стално тако назива.
+
+
+Меркаторова мапа из 1583. године
+Почетком 18. века Паланка је укључена у аустроугарску војну границу, а 1740. године прикључена среској граничној команди, да би 1744. године, одлуком Бечке дворске канцеларије, развојачена и припојена Бач-бодрошкој жупанији. Већ 1747. године извршен је први жупанијски попис пореских обвезника, а било их је 119 и сви су били Срби. По развојачењу Паланка је као посед припала Краљевској варској комори са још неколико места која су и онда носила имена као и нека села у садашњој бачкопаланачкој општини.
+
+
+У првој половини 19. века бележи се економски развој кроз напредак пољопривреде, трговине и занатства, а 1818. године формирани су први занатски цехови. Право на организовање вашара, два пута годишње, Паланка је добила 1826. године, када је имала 7.500 становника. Добила је и право на мали вашар – пијацу средом, што је и данас пијачни дан у овој вароши.
+Бачка Паланка – некад
+Telegraf je ovde stigao pre pruge, odnosno 1889. godine, a telefon 1. novembra 1907. godine i tada je u varoši bio 21 telefon, a 10 godina kasnije 50 priključaka. Poreska uprava formirana je još 1841. Iz Sombora 1871. godine, gde je bilo sedište Županije, u Palanku se seli sreski sud, pet godina kasnije i gruntovnica, a 1882. i javno beležištvo. Pristanište i brodska agencija ovde su počeli sa radom 1896. godine, a Građanska škola je otvorena deceniju ranije. U to vreme osnivaju se i prvi novčani zavodi („Palančaka kasa“).
+
+
+Svilara ovde počinje sa radom 1860. godine, a dve decenije kasnije počinje sa radom i prvi mlin. Godinu – dve kasnije počinje sa radom i fabrika za preradu kudelje („Juta“, kasnije Kombinat podova „Sintelon“, pa AD „Sintelon“ i danas „Tarket“ d.o.o.) Već 1901. godine ovde se, za ono vreme, otvara prva moderna ciglana u kojoj se na industrijski način proizvodila cigla i crep. Interesantno je da je prva štamparija počela sa radom 1881. godine, a kasnije su radile tri. Prvi nedeljni list izašao je 1904. godine, a do Drugog svetskog rata izlazilo je 30-tak listova i časopisa. Električna centrala koja je strujom snabedavala Palanku, ali i obližnja sela puštena je u rad 1923. godine, u to vreme otvorena je i fabrika kožne galaneterije „Merkur“ koja je ugašena u vremenu ovovekovne privatizacije i tranzicije, a postojalo je i devet kudeljara.
+Palanka je 1880. godine imala 10.645 stanovnika, a 1910. – 13.047. Bili su Srbi, Mađari, Nemci, Slovaci, Romi… Nekada su postojale samo Stara i Nova Palanka, a između u širini od oko dva kilometra bila je močavara. Dolaskom kolonista i isušivanjem zemljišta stvoren je i treći deo Palanke (i danas se lokalno samo taj deo zove Bačka Palanka pored Stare i Nove), a 1918. godine spojeni su u Bačku Palanku kao tri oštine. Posle Drugog svetskog rata, ukinute su opštine, a ova varoš jedinstvena pod nazivom Bačka Palanka, beležila je dinamičan razvoj i smatra se i danas za jednu od najrazvijenijih opština u Vojvodini i Srbiji, i pored velikih šteta u minule dve decenije.Telegraf je ovde stigao pre pruge, odnosno 1889. godine, a telefon 1. novembra 1907. godine i tada je u varoši bio 21 telefon, a 10 godina kasnije 50 priključaka. Poreska uprava formirana je još 1841. Iz Sombora 1871. godine, gde je bilo sedište Županije, u Palanku se seli sreski sud, pet godina kasnije i gruntovnica, a 1882. i javno beležištvo. Pristanište i brodska agencija ovde su počeli sa radom 1896. godine, a Građanska škola je otvorena deceniju ranije. U to vreme osnivaju se i prvi novčani zavodi („Palančaka kasa“).
+Бачка Паланка – данас
+Данас у бачкопаланачкој општини, која обухвата град и 13 села, живи око 50.000 људи од којих преко 28.000 у Бачкој Паланци, а друга половина у Челареву, Пивницама, Парагама, Деспотову, Силбашу, Новој Гајдобри, Гајдобри, Обровцу, Товаришеву, Карађорђеву, Младенову, Нештину и Визићу.
+
+Caffe & Bar (1)FeaturedGde izaći?hírek magyarulreklamna tablaSlovenské správy
+
+БАЧКА ПАЛАНКА ВЕСТИ - БАПдешавања Информативни портал - општине Бачка Паланка, Бач, Бачки Петровац
