@@ -17,108 +17,131 @@ const categories = [
   { name: "Занимљивости", url: "https://backapalankavesti.com/zanimljivosti/" }
 ] as const;
 
-function log(cat: string, msg: string) {
-  console.log(`   [${cat}] ${msg}`);
+function log(category: string, message: string) {
+  console.log(`[${category}] ${message}`);
 }
 
-async function getAllArticleLinks(page: import("playwright").Page, baseUrl: string) {
-  const links = new Set<string>();
-  let currentPage = 1;
-  let hasNextPage = true;
+async function debugPage(page: import("playwright").Page, category: string) {
+  try {
+    const html = await page.content();
+    await fs.writeFile(`debug_${category}.html`, html, 'utf8');
+    log("DEBUG", `Saved debug HTML for ${category}`);
+  } catch (error) {
+    log("DEBUG", `Failed to save debug HTML: ${error}`);
+  }
+}
 
-  while (hasNextPage) {
-    const pageUrl = currentPage === 1 ? baseUrl : `${baseUrl}page/${currentPage}/`;
-    log("PAGE", `Checking page ${currentPage}: ${pageUrl}`);
+async function getAllArticleLinks(page: import("playwright").Page, categoryUrl: string, categoryName: string) {
+  const articleLinks = new Set<string>();
+  
+  try {
+    log(categoryName, `Loading page: ${categoryUrl}`);
+    await page.goto(categoryUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
+    await page.waitForTimeout(2000);
 
-    try {
-      await page.goto(pageUrl, { waitUntil: "networkidle", timeout: 60000 });
-      await page.waitForTimeout(3000);
+    const pageTitle = await page.title();
+    log(categoryName, `Page title: ${pageTitle}`);
 
-      const title = await page.title();
-      if (title.includes("404") || title.includes("Not Found")) {
-        log("PAGE", `Page ${currentPage} doesn't exist (404)`);
-        hasNextPage = false;
-        break;
-      }
+    let loadMoreAttempts = 0;
+    const maxLoadMoreAttempts = 10;
 
-      // Multiple selectors to find article links
-      const selectors = [
-        'article a',
-        '.td-module-container a',
-        '.tdb_module_loop a',
-        '.td-module-title a',
-        'h3.entry-title a',
-        'h2.entry-title a',
-        'h3 a',
-        'h2 a'
-      ];
-
-      for (const selector of selectors) {
-        try {
-          const pageLinks = await page.$$eval(selector, (elements) => 
-            elements
-              .filter((el): el is HTMLAnchorElement => el instanceof HTMLAnchorElement)
-              .map((el) => el.href)
-              .filter((href) => 
-                href && 
-                href.includes('backapalankavesti.com') && 
-                !href.includes('/category/') &&
-                !href.includes('/author/') &&
-                !href.includes('/page/') &&
-                !href.includes('/tag/') &&
-                href.split('/').filter(Boolean).length > 4
-              )
-          );
-
-          if (pageLinks.length > 0) {
-            pageLinks.forEach(link => links.add(link));
-            log("PAGE", `Found ${pageLinks.length} links using selector "${selector}"`);
-            break;
-          }
-        } catch (err) {
-          continue;
+    while (loadMoreAttempts < maxLoadMoreAttempts) {
+      try {
+        const loadMoreButton = await page.$('button:has-text("Učitaj više"), button:has-text("Još vesti"), a:has-text("Učitaj više"), a:has-text("Još vesti")');
+        
+        if (loadMoreButton) {
+          log(categoryName, `Found "Učitaj više" button (attempt ${loadMoreAttempts + 1})`);
+          await loadMoreButton.click();
+          await page.waitForTimeout(3000);
+          await page.waitForLoadState("domcontentloaded");
+          loadMoreAttempts++;
+        } else {
+          log(categoryName, `No more "Učitaj više" buttons found`);
+          break;
         }
-      }
-
-      if (links.size === 0) {
-        log("PAGE", `No articles found on page ${currentPage}`);
-        hasNextPage = false;
+      } catch (error) {
+        log(categoryName, `Error clicking "Učitaj više": ${error}`);
         break;
       }
-
-      const nextPageLink = await page.$('a.next.page-numbers, .page-nav a:has-text("Следећа")');
-      if (!nextPageLink) {
-        hasNextPage = false;
-      } else {
-        currentPage++;
-      }
-
-      if (currentPage > 50) {
-        log("PAGE", "Reached maximum of 50 pages");
-        hasNextPage = false;
-      }
-
-    } catch (err) {
-      log("ERROR", `Error scraping page ${currentPage}: ${err}`);
-      hasNextPage = false;
     }
+
+    const linkSelectors = [
+      "article h2 a",
+      "article .entry-title a",
+      "h3.entry-title a", 
+      "h3.td-module-title a",
+      "div.td-module-title a",
+      "div.tdb-module-title a",
+      ".post-title a",
+      ".entry-title a",
+      "h2 a",
+      "h3 a"
+    ];
+
+    for (const selector of linkSelectors) {
+      try {
+        const links = await page.$$eval(selector, (elements) => 
+          elements
+            .filter((el): el is HTMLAnchorElement => el instanceof HTMLAnchorElement)
+            .map((el) => el.href)
+            .filter((href) => 
+              href && 
+              href.includes('backapalankavesti.com') &&
+              !href.includes('/category/') &&
+              !href.includes('/author/') &&
+              !href.includes('/page/')
+            )
+        );
+
+        if (links.length > 0) {
+          links.forEach(link => articleLinks.add(link));
+          log(categoryName, `Found ${links.length} links with selector: ${selector}`);
+          break;
+        }
+      } catch (error) {
+        continue;
+      }
+    }
+
+    if (articleLinks.size === 0) {
+      try {
+        const allLinks = await page.$$eval('a[href]', (elements) => 
+          elements
+            .filter((el): el is HTMLAnchorElement => el instanceof HTMLAnchorElement)
+            .map((el) => el.href)
+            .filter((href) => 
+              href && 
+              href.includes('backapalankavesti.com') &&
+              !href.includes('/category/') &&
+              !href.includes('/author/') &&
+              !href.includes('/page/')
+            )
+        );
+        allLinks.forEach(link => articleLinks.add(link));
+        log(categoryName, `Found ${allLinks.length} links with generic selector`);
+      } catch (error) {
+        log(categoryName, `Error with generic selector: ${error}`);
+      }
+    }
+
+  } catch (error) {
+    log(categoryName, `Error loading category page: ${error}`);
+    await debugPage(page, categoryName);
   }
 
-  return Array.from(links);
+  return Array.from(articleLinks);
 }
 
-async function extractArticle(page: import("playwright").Page, url: string) {
+async function extractArticle(page: import("playwright").Page, articleUrl: string) {
   const titleSelectors = [
     "h1.entry-title",
     "h1.post-title", 
-    "h1.td-post-title",
+    "h1.single-post-title",
     "h1.td-pb-title",
     "h1.tdb-title-text",
     "h1",
     ".entry-title",
-    ".post-title",
-    ".td-post-title",
-    ".tdb-title-text"
+    ".post-title"
   ];
 
   const dateSelectors = [
@@ -128,9 +151,7 @@ async function extractArticle(page: import("playwright").Page, url: string) {
     "span.td-post-date time",
     "time[datetime]",
     ".entry-date",
-    ".post-date",
-    ".td-post-date",
-    ".tdb-date"
+    ".post-date"
   ];
 
   const bodySelectors = [
@@ -140,9 +161,7 @@ async function extractArticle(page: import("playwright").Page, url: string) {
     "article .entry-content",
     ".post-content",
     ".article-content",
-    "main article",
-    ".td-post-text-content",
-    ".tdb_single_content"
+    "main article"
   ];
 
   let title = "";
@@ -212,7 +231,7 @@ async function extractArticle(page: import("playwright").Page, url: string) {
     title: title || "Без наслова", 
     date: dateIso || new Date().toISOString().slice(0, 10), 
     body: body || "", 
-    url 
+    url: articleUrl 
   };
 }
 
@@ -246,70 +265,55 @@ ${body}
     args: [
       '--no-sandbox',
       '--disable-dev-shm-usage',
-      '--disable-blink-features=AutomationControlled',
-      '--disable-web-security'
+      '--disable-blink-features=AutomationControlled'
     ]
   });
   
   const context = await browser.newContext({
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    extraHTTPHeaders: {
-      'Accept-Language': 'sr-RS,sr;q=0.9,en;q=0.8',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-    }
+    locale: 'sr-RS',
+    viewport: { width: 1280, height: 720 }
   });
   
   const page = await context.newPage();
 
   for (const { name, url } of categories) {
-    console.log(`\n▶  Processing category: ${name}`);
+    log("CATEGORY", `Starting: ${name}`);
 
     try {
-      log(name, "Collecting links from all pages...");
-      const allLinks = await getAllArticleLinks(page, url);
-      
-      if (allLinks.length === 0) {
-        log(name, "No articles found - trying alternative approach...");
-        
-        // Try alternative approach for category pages
-        await page.goto(url, { waitUntil: "networkidle", timeout: 60000 });
-        const html = await page.content();
-        await fs.writeFile(`debug_${name.replace(/[^a-zA-Z0-9]/g, '_')}.html`, html, 'utf8');
-        
-        log(name, `Saved debug HTML for manual inspection: debug_${name.replace(/[^a-zA-Z0-9]/g, '_')}.html`);
+      const articleLinks = await getAllArticleLinks(page, url, name);
+      log(name, `Total articles found: ${articleLinks.length}`);
+
+      if (articleLinks.length === 0) {
+        await debugPage(page, name);
         continue;
       }
 
-      log(name, `Found total ${allLinks.length} articles`);
-
-      for (const [index, href] of allLinks.entries()) {
+      for (const [index, href] of articleLinks.entries()) {
         try {
-          log(name, `[${index + 1}/${allLinks.length}] Processing: ${href}`);
+          log(name, `Processing article ${index + 1}/${articleLinks.length}`);
+          await page.goto(href, { waitUntil: "domcontentloaded", timeout: 30000 });
+          await page.waitForTimeout(1000);
           
-          await page.goto(href, { waitUntil: "networkidle", timeout: 60000 });
-          await page.waitForTimeout(2000);
+          const article = await extractArticle(page, href);
           
-          const art = await extractArticle(page, href);
-          
-          if (!art.body || art.body.length < 50) {
-            log(name, `[${index + 1}] Skipped (low content): ${href}`);
+          if (!article.body || article.body.length < 50) {
+            log(name, `Skipping (low content): ${article.title}`);
             continue;
           }
           
-          await writeArticle(art, name);
-          log(name, `[${index + 1}] ✓ Saved: ${art.title.slice(0, 50)}...`);
+          await writeArticle(article, name);
+          log(name, `Saved: ${article.title.substring(0, 50)}...`);
           
-        } catch (err) {
-          log(name, `[${index + 1}] ✖ Error: ${err}`);
+        } catch (error) {
+          log(name, `Error processing article: ${error}`);
         }
       }
-
-    } catch (err) {
-      console.error(`   ✖ Critical error in category ${name}:`, err);
+    } catch (error) {
+      log("ERROR", `Category failed: ${name} - ${error}`);
     }
   }
 
   await browser.close();
-  console.log("\n🏁 Scraping completed");
+  log("DONE", "Finished scraping all categories");
 })();
